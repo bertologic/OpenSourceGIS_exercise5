@@ -27,12 +27,12 @@ import os
 def main():
 
     # Path to the folder containing that data sets
-    path_data = "//netfilec.ad.uni-heidelberg.de/home/n/nb152/git/OpenSourceGIS_exercise5/data"
+    path_data = "C:/Users/Jannik/Documents/Studium/3_Wintersemester 18-19/FOSS_GIS/Aufgaben/exercise05/OpenSourceGIS_exercise5/data"
 
     # 0. Adjust the region of the mapset to your city ---------------------------
 
     # Create new layer containting the selected district
-    gscript.run_command('v.extract', input='cities@PERMANENT', where="name='AK27'", output='studyarea')
+    gscript.run_command('v.extract', input='cities@PERMANENT', where="name='CH2'", output='studyarea')
     
     # Adjust GRASS GIS region to the study area
     gscript.run_command('g.region', vect='studyarea', align='rainfall@PERMANENT')
