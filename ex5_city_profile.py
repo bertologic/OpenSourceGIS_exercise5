@@ -110,11 +110,11 @@ def main():
     gscript.run_command('v.db.addcolumn', map='cyclewaysInStudyarea', columns='length double precision')
 
     # Calculate the length of each cycleway and store the result in the column 'length'
-    gscript.run_command('v.to.db', map='cyclewaysInStudyarea', type='line', option='length', columns='length', units='kilometers')
+    gscript.run_command('v.to.db', map='cyclewaysInStudyarea', type='line', option='length', columns='length', units='miles')
 
     # Print the summary statistics for the column 'length'
     cyclewaysStatistics = gscript.read_command('v.db.univar', map='cyclewaysInStudyarea', column='length')
-    print("Total length of cycleways: " + cyclewaysStatistics.split("\n")[9] + " km")
+    print("Total length of cycleways: " + cyclewaysStatistics.split("\n")[9] + " nm")
 
 
     # 4. Find the nearby airports 
@@ -133,7 +133,7 @@ def main():
 
     # Export airport distances to file 
     path_out_airportdistances = os.path.join(path_data, 'airport_distances.shp')
-    gscript.run_command('v.out.ogr', input='airport_distances', output=path_out_airportdistances, format='ESRI_Shapefile')
+    gscript.run_command('v.out.ogr', input='airport_distances', output=path_out_airportdistances, format='GeoJSON')
 
 
 if __name__ == '__main__':
