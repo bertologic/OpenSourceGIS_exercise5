@@ -76,7 +76,24 @@ def main():
     # 2.1 Calculate number of Pubs in Auckland using osm_pubs.geojson
     #-----------------------------------------------------------------
 
-    # add code here ....
+ 
+    # The data set 'osm_hostels.geojson' includes ways and their nodes. We only want to import the ways with the tag tourism=hostel
+    # This can be done using v.in.ogr and the 'where' parameter. But in order to use this tool we need 
+    # to reproject the data set first to EPSG:32760 using ogr2ogr.
+
+    # Path to data set containing bars
+    path_osm_bars = os.path.join(path_data, 'osm_bars.geojson')
+
+    # Reproject the data set
+    path_osm_bars_reprojected = os.path.join(path_data, 'osm_bars_reprojected.geojson')
+    subprocess.call(['ogr2ogr', '-f', 'geojson', '-t_srs', 'EPSG:32760', path_osm_bars_reprojected, path_osm_bars])
+    
+    # Importing the reprojected data set using v.in.ogr to be able to set the "where" parameter
+    gscript.run_command('v.in.ogr', input =path_osm_bars_reprojected, layer='osm_bars', output='bars', where="amenity='bar'")
+    
+    # Count the hostels within the study area
+    NumberOfBars = gscript.read_command('v.vect.stats', flags='p', points='bars', areas='studyarea', type='point,centroid')
+    print("Number of bars: " + NumberOfBars.split('|')[2])
 
 
     # 3. Calculate total length of cycleways 
