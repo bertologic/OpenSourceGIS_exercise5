@@ -39,7 +39,7 @@ def main():
 
     # 1. Calculate average rainfall within the study area 
     # ----------------------------------------------------
-    gscript.run_command('v.rast.stats', flags='c', map='studyarea', raster='rainfall@PERMANENT', column_prefix='rf', method='average,minimum')
+    gscript.run_command('v.rast.stats', flags='c', map='studyarea', raster='rainfall@PERMANENT', column_prefix='rf', method='average,minimum,maximum')
     
     # Read and print value of column "rf_average"
     rf_average = gscript.read_command('v.db.select', map='studyarea', columns='rf_average')
@@ -47,6 +47,9 @@ def main():
     # Read and print value of column "rf_minimum" 
     rf_minimum = gscript.read_command('v.db.select', map='studyarea', columns='rf_minimum')
     print("Minimum rainfall: " + rf_minimum.split("\n")[1])
+    # Read and print value of column "rf_maximum" 
+    rf_maximum = gscript.read_command('v.db.select', map='studyarea', columns='rf_maximum')
+    print("Maximum rainfall: " + rf_maximum.split("\n")[1])
 
 
     # 2. Calculate number of hostels in Auckland 
